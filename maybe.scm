@@ -22,6 +22,8 @@
       ((Just? a) (cadr a))
       (else (Nothing)))))
 
-(define Filter-Nothing
+(define filter-Nothing
   (lambda (l)
-    (filter (lambda (a) (not (Nothing? a))) l)))
+    (filter (lambda (a)
+              (not (Nothing? a)))
+            l)))
