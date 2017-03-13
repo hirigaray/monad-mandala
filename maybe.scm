@@ -24,4 +24,4 @@
 
 (define Filter-Nothing
   (lambda (l)
-    (filter Nothing? l)))
+    (filter (not Nothing?) l)))
