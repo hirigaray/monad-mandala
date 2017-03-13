@@ -2,22 +2,26 @@
   (lambda (a)
     (list 'Just a)))
 
-(define Nothing
-  (lambda ()
-    'Nothing))
-
-(define nothing?
-  (lambda (a)
-    (equal? 'Nothing a)))
-
-(define just?
+(define Just?
   (lambda (a)
     (and (list? a)
          (equal? 'Just (car a)))))
 
+(define Nothing
+  (lambda ()
+    'Nothing))
+
+(define Nothing?
+  (lambda (a)
+    (equal? 'Nothing a)))
+
 (define Unwrap
   (lambda (a)
     (cond
-      ((nothing? a) a)
-      ((just? a) (cadr a))
+      ((Nothing? a) a)
+      ((Just? a) (cadr a))
       (else (Nothing)))))
+
+(define Filter-Nothing
+  (lambda (l)
+    (filter nothing? l)))
