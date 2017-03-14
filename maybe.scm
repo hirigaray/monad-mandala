@@ -1,10 +1,3 @@
-(define Maybe:>>=
-  (lambda (f a)
-    (cond
-      ((Nothing? a) (Nothing))
-      ((Just? a) (f (Unwrap a)))
-      (else (error ">>=" "Tried to bind a non-Maybe value")))))
-
 (define Just
   (lambda (a)
     (list 'Just a)))
@@ -21,6 +14,13 @@
 (define Nothing?
   (lambda (a)
     (equal? 'Nothing a)))
+
+(define Maybe:>>=
+  (lambda (a f)
+    (cond
+      ((Just? a) (Just (f (Unwrap a))))
+      ((Nothing? a) (Nothing))
+      (else (error ">>=" "Tried to bind a non-Maybe value")))))
 
 (define Unwrap
   (lambda (a)
