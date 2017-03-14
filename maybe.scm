@@ -1,7 +1,9 @@
-(define (panic! who msg)
-  (display (string-append "panic: " who ": " msg))
-  (newline)
-  (exit))
+(define >>=
+  (lambda (f x)
+    (cond
+      ((Nothing? x) (Nothing))
+      ((Just? x) (f (Unwrap x)))
+      (else (error ">>=" "Tried to bind a non-Maybe value")))))
 
 (define Just
   (lambda (a)
@@ -23,9 +25,9 @@
 (define Unwrap
   (lambda (a)
     (cond
-      ((Nothing? a) (panic! "Unwrap" "Tried to unwrap Nothing"))
+      ((Nothing? a) (error "Unwrap" "Tried to unwrap Nothing"))
       ((Just? a) (cadr a))
-      (else (panic! "Unwrap" "Tried to unwrap a non-Maybe value")))))
+      (else (error "Unwrap" "Tried to unwrap a non-Maybe value")))))
 
 (define filter-Nothing
   (lambda (l)
