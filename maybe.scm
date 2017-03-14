@@ -18,7 +18,7 @@
 (define Maybe:>>=
   (lambda (a f)
     (cond
-      ((Just? a) (Just (f (Unwrap a))))
+      ((Just? a) (f (Unwrap a)))
       ((Nothing? a) (Nothing))
       (else (error ">>=" "Tried to bind a non-Maybe value")))))
 
