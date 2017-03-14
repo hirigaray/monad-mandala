@@ -1,3 +1,8 @@
+(define (panic! who msg)
+  (display (string-append "panic: " who ": " msg))
+  (newline)
+  (exit))
+
 (define Just
   (lambda (a)
     (list 'Just a)))
@@ -18,9 +23,9 @@
 (define Unwrap
   (lambda (a)
     (cond
-      ((Nothing? a) a)
+      ((Nothing? a) (panic! "Unwrap" "Tried to unwrap Nothing"))
       ((Just? a) (cadr a))
-      (else (Nothing)))))
+      (else (panic! "Unwrap" "Tried to unwrap a non-Maybe value")))))
 
 (define filter-Nothing
   (lambda (l)
