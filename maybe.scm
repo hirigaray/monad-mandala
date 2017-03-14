@@ -1,8 +1,8 @@
-(define >>=
-  (lambda (f x)
+(define Maybe:>>=
+  (lambda (f a)
     (cond
       ((Nothing? x) (Nothing))
-      ((Just? x) (f (Unwrap x)))
+      ((Just? a) (f (Unwrap a)))
       (else (error ">>=" "Tried to bind a non-Maybe value")))))
 
 (define Just
@@ -25,8 +25,8 @@
 (define Unwrap
   (lambda (a)
     (cond
-      ((Nothing? a) (error "Unwrap" "Tried to unwrap Nothing"))
       ((Just? a) (cadr a))
+      ((Nothing? a) (error "Unwrap" "Tried to unwrap Nothing"))
       (else (error "Unwrap" "Tried to unwrap a non-Maybe value")))))
 
 (define filter-Nothing
