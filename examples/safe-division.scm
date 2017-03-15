@@ -7,7 +7,7 @@
                 Nothing
                 (/ x y)))))
 
-(define (safe-division-long a b)
+(define (explicit-safe-division a b)
   (Bind (Just a)
         (lambda (x)
           (Bind (Just b)
