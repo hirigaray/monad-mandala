@@ -3,9 +3,7 @@
   (lambda (a)
     (list 'Just a)))
 
-(define Nothing
-  (lambda ()
-    'Nothing))
+(define Nothing 'Nothing)
 
 ; Equality checkers
 (define Just?
@@ -15,20 +13,20 @@
 
 (define Nothing?
   (lambda (a)
-    (equal? 'Nothing a)))
+    (equal? Nothing a)))
 
 ; Monadic operators
 (define Return
   (lambda (a)
     (cond
-      ((Nothing? a) (Nothing))
+      ((Nothing? a) Nothing)
       (else (Just a)))))
 
 (define Bind
   (lambda (a f)
     (cond
       ((Just? a) (f (Unwrap a)))
-      ((Nothing? a) (Nothing))
+      ((Nothing? a) Nothing)
       (else (error ">>=" "Tried to bind a non-Maybe value")))))
 
 ; Utility functions
@@ -44,3 +42,13 @@
     (filter (lambda (a)
               (not (Nothing? a)))
             l)))
+
+(define-syntax Do
+  (syntax-rules (<-)
+    [(_ e) e]
+
+    [(_ (var <- a) b ...)
+     (Bind a (lambda (var) (Do b ...)))]
+
+    [(_ a b ...)
+     (Bind a (lambda (_) (Do b ...)))]))
