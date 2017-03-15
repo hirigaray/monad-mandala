@@ -6,3 +6,12 @@
       (Return (if (zero? y)
                 Nothing
                 (/ x y)))))
+
+(define (safe-division-long a b)
+  (Bind (Just a)
+        (lambda (x)
+          (Bind (Just b)
+                (lambda (y)
+                  (Return (if (zero? y)
+                            Nothing
+                            (/ x y))))))))
