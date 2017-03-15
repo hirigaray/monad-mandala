@@ -45,10 +45,10 @@
 
 (define-syntax Do
   (syntax-rules (<-)
-    [(_ e) e]
+    ((_ e) e)
 
-    [(_ (var <- a) b ...)
-     (Bind a (lambda (var) (Do b ...)))]
+    ((_ (var <- a) b ...)
+     (Bind a (lambda (var) (Do b ...))))
 
-    [(_ a b ...)
-     (Bind a (lambda (_) (Do b ...)))]))
+    ((_ a b ...)
+     (Bind a (lambda (_) (Do b ...))))))
