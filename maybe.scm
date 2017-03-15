@@ -3,7 +3,6 @@
   (lambda (a)
     (list 'Just a)))
 
-
 (define Nothing
   (lambda ()
     'Nothing))
