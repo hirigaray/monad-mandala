@@ -1,27 +1,38 @@
+; Primitive definitions
 (define Just
   (lambda (a)
     (list 'Just a)))
 
-(define Just?
-  (lambda (a)
-    (and (list? a)
-         (equal? 'Just (car a)))))
 
 (define Nothing
   (lambda ()
     'Nothing))
 
+; Equality checkers
+(define Just?
+  (lambda (a)
+    (and (list? a)
+         (equal? 'Just (car a)))))
+
 (define Nothing?
   (lambda (a)
     (equal? 'Nothing a)))
 
-(define Maybe:>>=
+; Monadic operators
+(define Return
+  (lambda (a)
+    (cond
+      ((Nothing? a) (Nothing))
+      (else (Just a)))))
+
+(define Bind
   (lambda (a f)
     (cond
       ((Just? a) (f (Unwrap a)))
       ((Nothing? a) (Nothing))
       (else (error ">>=" "Tried to bind a non-Maybe value")))))
 
+; Utility functions
 (define Unwrap
   (lambda (a)
     (cond
