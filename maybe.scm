@@ -22,7 +22,7 @@
     (cond
       ((Just? a) (cadr a))
       ((Nothing? a) (error "Extract" "Tried to extract Nothing"))
-      (else (error "Extract" "Tried to extract a non-Maybe value")))))
+      (else (error "Extract" "Tried to extract from a non-Maybe value")))))
 
 (define Return
   (lambda (a)
