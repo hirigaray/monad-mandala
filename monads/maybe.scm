@@ -1,4 +1,4 @@
-; Primitive definitions
+; Primitives
 (define Just
   (lambda (a)
     (list 'Just a)))
@@ -6,7 +6,7 @@
 (define Nothing
   (quote Nothing))
 
-; Equality checkers
+; Predicates
 (define Just?
   (lambda (a)
     (and (list? a)
@@ -21,8 +21,8 @@
     (or (Just? a)
         (Nothing? a))))
 
-; "Monad"ic operators
-; Return is just (Just a)
+; Monadic operators
+; Return takes a value a and returns (Just a)
 (define Return
   (lambda (a)
     (Just a)))
@@ -32,16 +32,17 @@
   (lambda (ma)
     (cond
       ((Just? ma) (cadr ma))
-      ((Nothing? ma) (error "Extract" "Tried to extract Nothing"))
-      (else (error "Extract" "Tried to extract from a non-Maybe value")))))
+      ((Nothing? ma) (error "Extract" "Input was Nothing"))
+      (else (error "Extract" "Input was a non-Maybe value")))))
 
-; Bind takes a (Maybe a) value and a function f and applies f to a if it's not Nothing
+; Bind takes a (Maybe a) value and a function f
+; and applies f to a if it's not Nothing
 (define Bind
   (lambda (ma f)
     (cond
       ((Just? ma) (f (Extract ma)))
       ((Nothing? ma) Nothing)
-      (else (error ">>=" "Tried to bind a non-Maybe value")))))
+      (else (error ">>=" "Input was a non-Maybe value")))))
 
 ; Utility functions
 (define filter-Nothing
